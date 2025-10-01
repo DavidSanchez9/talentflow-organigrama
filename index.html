@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organigrama TalentFlow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+        }
+
+        .level {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .position {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .position:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .position.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .position-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .position.active .position-title {
+            color: white;
+        }
+
+        .position-level {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+        }
+
+        .position.active .position-level {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .position.director {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .position.director .position-title {
+            color: white;
+            font-size: 1.3em;
+        }
+
+        .position.director .position-level {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .position.director:hover {
+            transform: translateY(-10px) scale(1.15);
+        }
+
+        .connector {
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+            z-index: -1;
+        }
+
+        .vertical-line {
+            width: 3px;
+            height: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .horizontal-line {
+            height: 3px;
+            top: -25px;
+        }
+
+        .info-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-top: 30px;
+            max-width: 600px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .info-panel.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .info-description {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .team-count {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>TalentFlow Consulting</h1>
+        <p>Transformamos el talento humano en ventaja competitiva</p>
+        <div class="team-count">👥 Equipo de 8 profesionales especializados</div>
+    </div>
+
+    <div class="org-chart">
+        <!-- Nivel 1: Director General -->
+        <div class="level">
+            <div class="position director" data-info="director">
+                <div class="position-title">Director General</div>
+                <div class="position-level">Nivel 1</div>
+            </div>
+        </div>
+
+        <!-- Nivel 2: Responsables -->
+        <div class="level">
+            <div class="position" data-info="seleccion">
+                <div class="position-title">Responsable de Selección</div>
+                <div class="position-level">Nivel 2</div>
+            </div>
+            <div class="position" data-info="formacion">
+                <div class="position-title">Responsable de Formación</div>
+                <div class="position-level">Nivel 2</div>
+            </div>
+        </div>
+
+        <!-- Nivel 3: Consultores -->
+        <div class="level">
+            <div class="position" data-info="senior">
+                <div class="position-title">Consultor Senior</div>
+                <div class="position-level">Nivel 3</div>
+            </div>
+            <div class="position" data-info="junior">
+                <div class="position-title">Consultor Junior</div>
+                <div class="position-level">Nivel 3</div>
+            </div>
+            <div class="position" data-info="legal">
+                <div class="position-title">Especialista Legal</div>
+                <div class="position-level">Nivel 3</div>
+            </div>
+        </div>
+
+        <!-- Nivel 4: Soporte -->
+        <div class="level">
+            <div class="position" data-info="admin">
+                <div class="position-title">Coordinador Administrativo</div>
+                <div class="position-level">Nivel 4</div>
+            </div>
+            <div class="position" data-info="datos">
+                <div class="position-title">Analista de Datos</div>
+                <div class="position-level">Nivel 4</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="info-title" id="infoTitle"></div>
+        <div class="info-description" id="infoDescription"></div>
+    </div>
+
+    <script>
+        const positionInfo = {
+            director: {
+                title: "Director General",
+                description: "Lidera la estrategia global de TalentFlow Consulting, define la visión y misión de la empresa, y supervisa todas las operaciones. Responsable de establecer alianzas estratégicas y garantizar el crecimiento sostenible de la organización."
+            },
+            seleccion: {
+                title: "Responsable de Selección",
+                description: "Gestiona los procesos de reclutamiento y selección de talento para clientes. Diseña estrategias de atracción de talento, realiza evaluaciones de candidatos y asegura el match perfecto entre empresas y profesionales."
+            },
+            formacion: {
+                title: "Responsable de Formación",
+                description: "Desarrolla e implementa programas de capacitación y desarrollo profesional. Identifica necesidades formativas, diseña planes de formación personalizados y mide el impacto de las acciones formativas en las organizaciones."
+            },
+            senior: {
+                title: "Consultor Senior",
+                description: "Profesional experimentado que lidera proyectos complejos de consultoría en recursos humanos. Asesora a clientes en transformación organizacional, gestión del cambio y optimización de procesos de RRHH."
+            },
+            junior: {
+                title: "Consultor Junior",
+                description: "Apoya en proyectos de consultoría bajo supervisión del Consultor Senior. Realiza análisis, prepara informes y participa en la implementación de soluciones de recursos humanos para clientes."
+            },
+            legal: {
+                title: "Especialista Legal",
+                description: "Garantiza el cumplimiento normativo en materia laboral y recursos humanos. Asesora sobre legislación laboral, contratos, convenios colectivos y resuelve cuestiones jurídicas relacionadas con la gestión de personas."
+            },
+            admin: {
+                title: "Coordinador Administrativo",
+                description: "Gestiona las operaciones administrativas diarias de la consultora. Coordina agendas, gestiona documentación, supervisa procesos internos y asegura el correcto funcionamiento de los servicios de apoyo."
+            },
+            datos: {
+                title: "Analista de Datos",
+                description: "Recopila, analiza e interpreta datos relacionados con recursos humanos y gestión del talento. Genera insights mediante análisis estadísticos y crea dashboards que facilitan la toma de decisiones estratégicas."
+            }
+        };
+
+        const positions = document.querySelectorAll('.position');
+        const infoPanel = document.getElementById('infoPanel');
+        const infoTitle = document.getElementById('infoTitle');
+        const infoDescription = document.getElementById('infoDescription');
+
+        positions.forEach(position => {
+            position.addEventListener('click', function() {
+                const infoKey = this.getAttribute('data-info');
+                const info = positionInfo[infoKey];
+
+                positions.forEach(p => p.classList.remove('active'));
+                if (!this.classList.contains('director')) {
+                    this.classList.add('active');
+                }
+
+                infoTitle.textContent = info.title;
+                infoDescription.textContent = info.description;
+                infoPanel.classList.add('show');
+            });
+        });
+    </script>
+</body>
+</html>
